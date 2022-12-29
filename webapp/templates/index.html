@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,14 +14,14 @@
 
     <div class = "text-center p-5">
         <h1>Sorting Balls Solver</h1>
-        <canvas class="ms-auto me-auto p-0 w-50 d-block" id = "canvas"></canvas>
-        <button id="button" class = "btn btn-primary">Add A Tube</button>
+        <!-- <canvas class="ms-auto me-auto p-0 w-50 d-block" id = "canvas"></canvas> -->
+        <a class = "btn btn-primary" href="../add-tubes">Add A Tube</a>
     </div>
     
     
 </body>
 
-<script src="../js/game_controller.js"></script>
+<script src="{% static '/js/game_controller.js' %}"></script>
 
 
 </html>
