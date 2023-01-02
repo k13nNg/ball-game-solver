@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_tags%}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,13 +16,36 @@
 
     <div class = "text-center p-5">
         <h1>Sorting Balls Solver</h1>
-        <canvas class="ms-auto me-auto p-0 w-50 d-block bg-dark" id = "canvas"></canvas>
+
+        <!-- <canvas class="ms-auto me-auto p-0 w-50 d-block bg-dark" id = "canvas"></canvas> 
+         -->
+
+        
+        
+        {% for i in tubes_collection%}
+        <svg class="m-3" width="100" height="500">
+
+            <rect width="100" height="500" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)" />
+
+            {% for j in i %}
+   
+                <circle cx="50" cy={{j.y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.color}} />
+                <!-- <div>{{j.y_pos}}</div> -->
+            {% endfor %}
+
+        </svg>
+
+        {% endfor %}
+
+
+        <br/>
         <br/>
 
         <a class = "btn btn-primary" href="../add-tubes">Add A Tube</a>
     </div>
 
-    <div>{{tubes_collection}}</div>
+
+    
     
     
 </body>
