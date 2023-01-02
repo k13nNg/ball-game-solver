@@ -41,7 +41,16 @@
         <br/>
         <br/>
 
-        <a class = "btn btn-primary" href="../add-tubes">Add A Tube</a>
+        <div class="d-flex flex-row mx-auto justify-content-center">
+            <a class = "mx-3 btn btn-primary" href="../add-tubes">Add A Tube</a>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                <button class = "btn btn-primary" type="submit"> Solve!</button>
+            </form>
+        </div>
+        
     </div>
 
 

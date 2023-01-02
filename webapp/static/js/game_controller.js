@@ -7,8 +7,4 @@ function draw_tube(){
     }
 }
 
-document.getElementById("button").addEventListener('click', () => {
-    alert("Hello World!")
-})
-
 
