@@ -29,7 +29,7 @@
 
             {% for j in i %}
    
-                <circle cx="50" cy={{j.y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.color}} />
+                <circle cx="50" cy={{j.get_y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.get_color}} />
                 <!-- <div>{{j.y_pos}}</div> -->
             {% endfor %}
 

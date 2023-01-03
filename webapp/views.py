@@ -1,12 +1,22 @@
 
 from django.shortcuts import render, redirect
-from webapp.models import Ball
-# temp_arr = []
 tubes_collection = []
 tube = []
 counter = 500
 
+class Ball:
+    color = ""
+    y_pos = 0
 
+    def __init__(self, c, yp):
+        self.color=c
+        self.y_pos=yp
+
+    def get_color(self):
+        return self.color
+
+    def get_y_pos(self):
+        return self.y_pos
 
 # Create your views here.
 def index(request):
@@ -33,7 +43,8 @@ def add_tubes(request):
     if (request.method == "POST"):
         counter = 500
         for i in range (int(request.POST.get("ball-num", None)),0,-1):
-            temp = Ball.objects.create(y_pos= counter-50, color=request.POST.get("ball-"+str(i), None))
+            # temp = Ball.objects.create(y_pos= counter-50, color=request.POST.get("ball-"+str(i), None))
+            temp = Ball(request.POST.get("ball-"+str(i), None), counter-50)
             counter -= 100
             tube.append(temp)
 
