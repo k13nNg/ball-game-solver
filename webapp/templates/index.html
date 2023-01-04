@@ -17,19 +17,16 @@
     <div class = "text-center p-5">
         <h1>Sorting Balls Solver</h1>
 
-        <!-- <canvas class="ms-auto me-auto p-0 w-50 d-block bg-dark" id = "canvas"></canvas> 
-         -->
-
-        
+        <div>Tube Size: {{tube_size}}</div>
         
         {% for i in tubes_collection%}
-        <svg class="m-3" width="100" height="500">
+        <svg class="m-3" width="100" height="{{tube_size|multiply:100}}">
 
-            <rect width="100" height="500" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)" />
+            <rect width="100" height="{{tube_size|multiply:100}}" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)" />
 
             {% for j in i %}
    
-                <circle cx="50" cy={{j.get_y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.get_color}} />
+                <circle cx="50" cy={{j.y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.color}} />
                 <!-- <div>{{j.y_pos}}</div> -->
             {% endfor %}
 
@@ -37,17 +34,35 @@
 
         {% endfor %}
 
-
-        <br/>
-        <br/>
-
-        <div class="d-flex flex-row mx-auto justify-content-center">
-            <a class = "mx-3 btn btn-primary" href="../add-tubes">Add A Tube</a>
+        
+        <div>
+            
 
             <form action="" method="POST">
                 {% csrf_token %}
 
-                <button class = "btn btn-primary" type="submit"> Solve!</button>
+                <div class="mb-3 m-auto">
+                    <label class="form-label">Change Tube Size</label>
+                    <select name = "tube_size" class="form-control m-auto text-center mb-3" style="width: 10%;">
+                      <option value = "0">0</option>
+                      <option value = "1">1</option>
+                      <option value = "2">2</option>
+                      <option value = "3">3</option>
+                      <option value = "4">4</option>
+                      <option value = "5">5</option>
+                    </select>
+
+                    <button name = "save-tubesize" class = "btn btn-primary" type="submit"> Save Tube Size</button>
+
+
+                </div>
+
+
+                <a class = "btn btn-primary" href="../add-tubes">Add A Tube</a>
+                
+                <button class = "btn btn-primary" type="submit" name = "reset"> Reset </button>
+
+                <button class = "btn btn-primary" type="submit" name = "solve"> Solve!</button>
             </form>
         </div>
         
