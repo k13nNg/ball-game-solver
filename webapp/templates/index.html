@@ -20,18 +20,25 @@
         <div>Tube Size: {{tube_size}}</div>
         
         {% for i in tubes_collection%}
-        <svg class="m-3" width="100" height="{{tube_size|multiply:100}}">
 
-            <rect width="100" height="{{tube_size|multiply:100}}" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)" />
+        {% if i|length > tube_size%}
+            <h4 class="text-danger">Your chosen tube size or the number of balls in the new tube is invalid</h4>
+            <h4 class="text-danger">Please reset the game</h4>
 
-            {% for j in i %}
-   
-                <circle cx="50" cy={{j.y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.color}} />
-                <!-- <div>{{j.y_pos}}</div> -->
-            {% endfor %}
+        {% else %}
+            <svg class="m-3" width="100" height="{{tube_size|multiply:100}}">
 
-        </svg>
+                <rect width="100" height="{{tube_size|multiply:100}}" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)" />
 
+                {% for j in i %}
+    
+                    <circle cx="50" cy={{j.y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.color}} />
+
+                {% endfor %}
+
+            </svg>
+        
+        {% endif %}
         {% endfor %}
 
         
