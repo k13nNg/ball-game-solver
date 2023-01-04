@@ -17,8 +17,8 @@
     <div class = "text-center p-5">
         <h1>Sorting Balls Solver</h1>
 
-        <div>Tube Size: {{tube_size}}</div>
-        
+        <div class="mb-3">Tube Size: {{tube_size}}</div>
+
         {% for i in tubes_collection%}
 
         {% if i|length > tube_size%}
@@ -41,10 +41,7 @@
         {% endif %}
         {% endfor %}
 
-        
         <div>
-            
-
             <form action="" method="POST">
                 {% csrf_token %}
 

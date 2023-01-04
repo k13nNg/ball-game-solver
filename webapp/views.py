@@ -10,9 +10,11 @@ class Game:
     max_colors = 0
     tubes_lst = []
 
-    def __init__(self, tube_size, lst_of_tubes):
+    def __init__(self, tube_size, lst_of_tubes, mc=0):
         self.tubes_lst = lst_of_tubes
-        self.max_colors = len(lst_of_tubes)
+        self.max_colors = mc
+        if(mc==0):
+            self.max_colors = len(lst_of_tubes)
         self.tube_size = tube_size
 
 
