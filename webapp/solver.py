@@ -131,14 +131,23 @@ def next_games(game):
 
     tubes_lst = deepcopy(game.tubes_lst)
     adjusted_new_tubes_lst = []
+    final_set=[]
 
     def remove_curr_tube(tube_index):
+        '''
+        Return a tubes_lst with tubes_lst[tube_index] removed
+        '''
+
         temp = deepcopy(tubes_lst)
         del temp[tube_index]
 
         return temp
 
     def add_ball_everywhere(ball, tubes_lst):
+        '''
+        Return a list of possible tubes_lst resulted from moving 1 ball in tubes_lst
+        '''
+
         possible_moves = []
 
         for j in range(len(tubes_lst)):
@@ -153,28 +162,33 @@ def next_games(game):
         return possible_moves
                 
 
-
+    # loop throught the game's tubes_lst
     for i in range(len(tubes_lst)):
-
+        # if the loop is empty, ignore it
         if len(tubes_lst[i]) == 0:
             pass
         else:
-            temp_holder=[tubes_lst[i][0]]
-            if(len(tubes_lst[i])>1):
-                temp_holder = tubes_lst[i][1:len(tubes_lst[i])]
+            # temporary variables (lists in python are weird, the list does not reset after the function is done)
+            temp_holder = deepcopy(tubes_lst[i])
+            temp_holder.pop(0)
             temp_arr = remove_curr_tube(i)
             top_ball = tubes_lst[i][0]
-            print(temp_holder)
-            # print("temp_arr: ", temp_arr)
            
-            adjusted_new_tubes_lst += add_ball_everywhere(top_ball, temp_arr)
+            # creat a temporary list to hold all possible tubes_lst
+            added_ball_arr = add_ball_everywhere(top_ball, temp_arr)
 
-            # print(adjusted_new_tubes_lst)
-            if len(temp_holder) != 0:
-                for k in adjusted_new_tubes_lst:
-                        k.insert(i, temp_holder)
+            # add in the removed list
+            for k in added_ball_arr:
+                k.insert(i, temp_holder)
 
-    return adjusted_new_tubes_lst
+            # add together all possible tubes_lst
+            adjusted_new_tubes_lst += added_ball_arr
+
+    # Make a list of possible games
+    for i in adjusted_new_tubes_lst:
+        final_set.append(Game(game.tube_size, i, game.max_colors))
+
+    return final_set
 
 
 
@@ -209,11 +223,10 @@ test_game_3 = Game(4, [['green']], 0)
 test_game_4 = Game(3, [['brown', 'blue'], ['red', 'red']], 0)
 
 
-temp = next_games(test_game_1)
+temp = next_games(test_game_6)
 
 for i in temp:
-    print(i)
-
+    print(i.tubes_lst)
 
 
 
