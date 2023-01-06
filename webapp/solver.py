@@ -1,4 +1,5 @@
 from views import Game
+from copy import copy, deepcopy
 
 def check_color(tube_size, num, lst_of_colors):
     '''
@@ -107,7 +108,7 @@ def num_blocks(tubes_lst):
 
 def are_equiv_games(game1, game2):
     '''
-    Returns 'true' if game1 and game2 are equivalent, false otherwise
+    Return 'true' if game1 and game2 are equivalent, false otherwise
 
     Two games are equivalent if they have:
         -> the same 'max_colors' value;
@@ -123,19 +124,74 @@ def are_equiv_games(game1, game2):
     
     return (game1.max_colors == game2.max_colors) and (game1.tube_size == game2.tube_size) and flag
 
-def all_games_equiv(log1, log2):
-    pass
+def next_games(game):
+    '''
+    Return a list of next possible games resulted from moving 1 ball in 'game.tubes_lst'
+    '''
+
+    tubes_lst = deepcopy(game.tubes_lst)
+    adjusted_new_tubes_lst = []
+
+    def remove_curr_tube(tube_index):
+        temp = deepcopy(tubes_lst)
+        del temp[tube_index]
+
+        return temp
+
+    def add_ball_everywhere(ball, tubes_lst):
+        possible_moves = []
+
+        for j in range(len(tubes_lst)):
+            temp_arr=deepcopy(tubes_lst)
+
+            if len(temp_arr[j]) == game.tube_size:
+                pass
+            else:
+                temp_arr[j].insert(0, ball)
+                possible_moves.append(temp_arr)
+        
+        return possible_moves
+                
+
+
+    for i in range(len(tubes_lst)):
+
+        if len(tubes_lst[i]) == 0:
+            pass
+        else:
+            temp_holder=[tubes_lst[i][0]]
+            if(len(tubes_lst[i])>1):
+                temp_holder = tubes_lst[i][1:len(tubes_lst[i])]
+            temp_arr = remove_curr_tube(i)
+            top_ball = tubes_lst[i][0]
+            print(temp_holder)
+            # print("temp_arr: ", temp_arr)
+           
+            adjusted_new_tubes_lst += add_ball_everywhere(top_ball, temp_arr)
+
+            # print(adjusted_new_tubes_lst)
+            if len(temp_holder) != 0:
+                for k in adjusted_new_tubes_lst:
+                        k.insert(i, temp_holder)
+
+    return adjusted_new_tubes_lst
+
+
+
+            
+
+
+
+    
+    
 
     
 # valid
-test_game_1 = Game(5,[['red', 'red'], \
-                    [], \
-                    ['blue', 'red', 'red', 'blue'], \
-                    ['red', 'blue', 'blue']], 0)
+test_game_1 = Game(2,[['red', 'blue'], ['green'], ['yellow']], 0)
 
-test_game_2 = Game(2,[['white', 'green'], \
+test_game_2 = Game(2,[['white', 'white'], \
                       [], \
-                      ['white', 'green']], 0)
+                      ['yellow', 'yellow']], 0)
 
 test_game_5 = Game(2, [['green', 'green'], ['red', 'blue']], 0)
 
@@ -152,11 +208,11 @@ test_game_3 = Game(4, [['green']], 0)
 
 test_game_4 = Game(3, [['brown', 'blue'], ['red', 'red']], 0)
 
-print(are_equiv_games(test_game_1, test_game_7))
 
+temp = next_games(test_game_1)
 
-
-
+for i in temp:
+    print(i)
 
 
 

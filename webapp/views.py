@@ -55,6 +55,7 @@ def index(request):
                     
                 list_of_tubes.append(list_of_balls)
 
+            print(list_of_tubes)
 
     return render(request, 'index.html', {'tubes_collection': tubes_collection, 'tube_size': tube_size_user})
 
