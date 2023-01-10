@@ -1,5 +1,6 @@
 from views import Game
-from copy import copy, deepcopy
+from copy import deepcopy, copy
+import sys
 
 def check_color(tube_size, num, lst_of_colors):
     '''
@@ -65,13 +66,18 @@ def is_finished(game):
     A game is finished if all its tubes are empty, or each tube is full with all balls of the same colour
     '''
 
-    # check is a game has no tubes, or has all of its tube empty
+    # check if a game has no tubes, or has all of its tube empty
     empty_tubes_cond = len(list(filter(lambda k: len(k) != 0, game.tubes_lst))) == 0
 
-    # check if there remains no completed tubes after removing all completed tubes
-    remove_completed_cond = len(remove_completed(game).tubes_lst) == 0
+    # check if there remains no uncomplete tubes after removing all completed tubes
+    remain_tubes = remove_completed(game).tubes_lst
 
-    return empty_tubes_cond and remove_completed_cond
+    remain_tubes = list(filter(lambda k: len(k) != 0, remain_tubes))
+
+    remove_completed_cond = len(remain_tubes) == 0
+
+
+    return (empty_tubes_cond or remove_completed_cond)
 
 def num_blocks(tubes_lst):
     '''
@@ -129,7 +135,7 @@ def next_games(game):
     Return a list of next possible games resulted from moving 1 ball in 'game.tubes_lst'
     '''
 
-    tubes_lst = deepcopy(game.tubes_lst)
+    tubes_lst = copy(game.tubes_lst)
     adjusted_new_tubes_lst = []
     final_set=[]
 
@@ -138,7 +144,7 @@ def next_games(game):
         Return a tubes_lst with tubes_lst[tube_index] removed
         '''
 
-        temp = deepcopy(tubes_lst)
+        temp = copy(tubes_lst)
         del temp[tube_index]
 
         return temp
@@ -169,7 +175,7 @@ def next_games(game):
             pass
         else:
             # temporary variables (lists in python are weird, the list does not reset after the function is done)
-            temp_holder = deepcopy(tubes_lst[i])
+            temp_holder = copy(tubes_lst[i])
             temp_holder.pop(0)
             temp_arr = remove_curr_tube(i)
             top_ball = tubes_lst[i][0]
@@ -190,6 +196,44 @@ def next_games(game):
 
     return final_set
 
+def solve(game):
+
+    '''
+    If the game is solvable, return True. Return False otherwise
+    '''
+
+    def solve_helper(to_visit, visited):
+        temp = deepcopy(to_visit)
+
+        if visited == None:
+            visited = []
+
+        if(len(temp) == 0):
+            print("Game is unsolvable")
+            return False
+
+        else:
+            if(is_finished(temp[0])):
+                return True
+            
+            elif (temp[0] in visited):
+                temp.pop(0)
+                return solve_helper(temp, visited)
+
+            else:
+                nbrs = next_games(temp[0])
+
+                new_to_visit = list(filter(lambda x: not(x in visited), nbrs))
+                new_visited = deepcopy(visited)
+
+                new_visited.insert(0, temp.pop(0))
+                new_to_visit.append(temp) 
+
+                
+                return solve_helper(new_to_visit, new_visited)
+
+    return solve_helper([game], None)
+
 
 
             
@@ -201,7 +245,7 @@ def next_games(game):
 
     
 # valid
-test_game_1 = Game(2,[['red', 'blue'], ['green'], ['yellow']], 0)
+test_game_1 = Game(2,[['blue', 'red'], ['blue', 'red'], []], 0)
 
 test_game_2 = Game(2,[['white', 'white'], \
                       [], \
@@ -216,17 +260,39 @@ test_game_7 = Game(5, [[], \
                     ['red', 'red'], \
                     ['blue', 'red', 'red', 'blue'], \
                     ['red', 'blue', 'blue']], 0)
+
+test_game_8 = Game(2, [['blue', 'blue'], ['red', 'red'], []], 0)
 # invalid
 
 test_game_3 = Game(4, [['green']], 0)
 
 test_game_4 = Game(3, [['brown', 'blue'], ['red', 'red']], 0)
 
+test_game_a = Game(2,[['red'], ['blue', 'red'], ['blue']], 0)
 
-temp = next_games(test_game_6)
 
-for i in temp:
-    print(i.tubes_lst)
+temp = solve(test_game_1)
+print(temp.tubes_lst)
+
+# temp_1 = next_games(test_game_1)
+# temp_2 = next_games(temp_1[0])
+# temp_3 = next_games(temp_2[2])
+# temp_4 = next_games(temp_3[0])
+# for i in temp_1:
+#     print("temp_1: ", i.tubes_lst)
+# print()
+# for i in temp_2:
+#     print("temp_2: ", i.tubes_lst)
+# print()
+# for i in temp_3:
+#     print("temp_3: ", i.tubes_lst)
+# print()
+# print(is_finished(temp_3[0]))
+
+# temp = solve(temp_1[0])
+# print(temp)
+
+# print(is_finished(test_game_8))
 
 
 
