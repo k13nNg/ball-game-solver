@@ -1,5 +1,5 @@
-from views import Game
 from copy import deepcopy, copy
+from .classes_OOP import Game
 import sys
 
 def check_color(tube_size, num, lst_of_colors):
@@ -201,98 +201,51 @@ def solve(game):
     '''
     If the game is solvable, return True. Return False otherwise
     '''
+    def is_member(game, list_of_game):
+        for i in list_of_game:
+            if game.max_colors == i.max_colors and game.tubes_lst == i.tubes_lst:
+                return True
+        return False
 
     def solve_helper(to_visit, visited):
-        temp = deepcopy(to_visit)
-
-        if visited == None:
+        if visited is None:
             visited = []
 
-        if(len(temp) == 0):
-            print("Game is unsolvable")
+        
+
+        if len(to_visit) == 0:
             return False
 
         else:
-            if(is_finished(temp[0])):
-                return True
-            
-            elif (temp[0] in visited):
-                temp.pop(0)
-                return solve_helper(temp, visited)
+            # for i in visited:
+            #     print(i.tubes_lst)
+
+            if(is_finished(to_visit[0])):
+
+                # Append the finished game - final step
+                visited.append(to_visit[0])
+                
+                # Record the visited tubes_lst
+                visited_tubes_lst = []
+                for i in visited:
+                    visited_tubes_lst.append(i.tubes_lst)
+
+                # Return the solution game list
+                return visited_tubes_lst
+
+            # elif is_member(to_visit[0], visited):
+            #     to_visit.pop(0)
+            #     return solve_helper(to_visit, visited)
 
             else:
-                nbrs = next_games(temp[0])
-
-                new_to_visit = list(filter(lambda x: not(x in visited), nbrs))
-                new_visited = deepcopy(visited)
-
-                new_visited.insert(0, temp.pop(0))
-                new_to_visit.append(temp) 
-
-                
-                return solve_helper(new_to_visit, new_visited)
+                nbrs = next_games(to_visit[0])
+                new = list(filter(lambda a: not(is_member(a, visited)), nbrs))
+                visited.append(to_visit.pop(0))
+                new.append(to_visit)
+                new = list(filter(lambda x: type(x) != list, new))
+                return solve_helper(new, visited)
 
     return solve_helper([game], None)
-
-
-
-            
-
-
-
-    
-    
-
-    
-# valid
-test_game_1 = Game(2,[['blue', 'red'], ['blue', 'red'], []], 0)
-
-test_game_2 = Game(2,[['white', 'white'], \
-                      [], \
-                      ['yellow', 'yellow']], 0)
-
-test_game_5 = Game(2, [['green', 'green'], ['red', 'blue']], 0)
-
-test_game_6 = Game(2, [['red', 'red'], \
-                        ['blue', 'blue']], 0)
-
-test_game_7 = Game(5, [[], \
-                    ['red', 'red'], \
-                    ['blue', 'red', 'red', 'blue'], \
-                    ['red', 'blue', 'blue']], 0)
-
-test_game_8 = Game(2, [['blue', 'blue'], ['red', 'red'], []], 0)
-# invalid
-
-test_game_3 = Game(4, [['green']], 0)
-
-test_game_4 = Game(3, [['brown', 'blue'], ['red', 'red']], 0)
-
-test_game_a = Game(2,[['red'], ['blue', 'red'], ['blue']], 0)
-
-
-temp = solve(test_game_1)
-print(temp.tubes_lst)
-
-# temp_1 = next_games(test_game_1)
-# temp_2 = next_games(temp_1[0])
-# temp_3 = next_games(temp_2[2])
-# temp_4 = next_games(temp_3[0])
-# for i in temp_1:
-#     print("temp_1: ", i.tubes_lst)
-# print()
-# for i in temp_2:
-#     print("temp_2: ", i.tubes_lst)
-# print()
-# for i in temp_3:
-#     print("temp_3: ", i.tubes_lst)
-# print()
-# print(is_finished(temp_3[0]))
-
-# temp = solve(temp_1[0])
-# print(temp)
-
-# print(is_finished(test_game_8))
 
 
 

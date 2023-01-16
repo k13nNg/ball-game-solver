@@ -1,48 +1,33 @@
-
 from django.shortcuts import render, redirect
+from .solver import solve
+from .classes_OOP import Game
+from .classes_OOP import Ball
+
 tubes_collection = []
 tube = []
 tube_size_user = 0 # The tube_size value defined by users
-
-
-class Game:
-    tube_size = 0
-    max_colors = 0
-    tubes_lst = []
-
-    def __init__(self, tube_size, lst_of_tubes, mc=0):
-        self.tubes_lst = lst_of_tubes
-        self.max_colors = mc
-        if(mc==0):
-            self.max_colors = len(lst_of_tubes)
-        self.tube_size = tube_size
-
-
-class Ball:
-    color = ""
-    y_pos = 0
-
-    def __init__(self, c, yp):
-        self.color=c
-        self.y_pos=yp
+output_solution = []
 
 # Create your views here.
 def index(request):
-    global tube_size_user, tubes_collection, tube
+    global tube_size_user, tubes_collection, tube, output_solution
 
     if(request.method == "POST"):
         list_of_tubes = []
 
+        # if Save Tubesize button is clicked
         if "save-tubesize" in request.POST:
             tube_size_user = int(request.POST.get("tube_size"))
             print(tube_size_user)
 
-        if "reset" in request.POST:
+        # if Reset button is clicked
+        elif "reset" in request.POST:
             tubes_collection = []
             tube = []
             tube_size_user = 0
         
-        else:
+        # when Solve button is clicked
+        elif "solve" in request.POST:
             for i in tubes_collection:
                 list_of_balls = []
 
@@ -51,13 +36,20 @@ def index(request):
                     # --> better to access arr[0] than arr[len(arr)-1]
                     list_of_balls.insert(0, j.color)
 
-                    
-                    
                 list_of_tubes.append(list_of_balls)
 
-            print(list_of_tubes)
+            input_game = Game(tube_size_user, list_of_tubes, 0)
+
+            # The solution to the configure (if exists)
+            output_solution = solve(input_game)
+
+            # Redirect you to the solution display page
+            return redirect('../solution')
 
     return render(request, 'index.html', {'tubes_collection': tubes_collection, 'tube_size': tube_size_user})
+
+def solution(request):
+    return render(request, 'solution.html', {'output': output_solution})
 
 def add_tubes(request):
     global tubes_collection, tube, counter, tube_size_user
@@ -70,7 +62,6 @@ def add_tubes(request):
             counter -= 100
             tube.append(temp)
 
-        
         tubes_collection.append(tube)
         tube = []
         return redirect('../index')
