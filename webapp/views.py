@@ -6,11 +6,11 @@ from .classes_OOP import Ball
 tubes_collection = []
 tube = []
 tube_size_user = 0 # The tube_size value defined by users
-output_solution = []
+solution = []
 
 # Create your views here.
 def index(request):
-    global tube_size_user, tubes_collection, tube, output_solution
+    global tube_size_user, tubes_collection, tube, solution
 
     if(request.method == "POST"):
         list_of_tubes = []
@@ -41,7 +41,7 @@ def index(request):
             input_game = Game(tube_size_user, list_of_tubes, 0)
 
             # The solution to the configure (if exists)
-            output_solution = solve(input_game)
+            solution = solve(input_game)
 
             # Redirect you to the solution display page
             return redirect('../solution')
@@ -49,6 +49,7 @@ def index(request):
     return render(request, 'index.html', {'tubes_collection': tubes_collection, 'tube_size': tube_size_user})
 
 def solution(request):
+
     return render(request, 'solution.html', {'output': output_solution})
 
 def add_tubes(request):
