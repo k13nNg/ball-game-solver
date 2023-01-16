@@ -1,6 +1,7 @@
+{% extends 'navbar.html'%}
 {% load static %}
+{% block navbar %}
 {% load custom_tags%}
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,7 @@
 <body>
 
     <div class = "text-center p-5">
-        <h1>Sorting Balls Solver</h1>
+        <h1>Ball Tubes Puzzle Solver</h1>
 
         <div class="mb-3">Tube Size: {{tube_size}}</div>
 
@@ -75,10 +76,12 @@
 
     
     
-    
+
 </body>
 
 <script src="{% static '/js/game_controller.js' %}"></script>
 
 
 </html>
+{% endblock%}
+

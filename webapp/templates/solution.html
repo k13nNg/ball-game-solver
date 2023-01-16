@@ -1,5 +1,8 @@
+{% extends 'navbar.html'%}
 {% load static %}
 {% load custom_tags%}
+{% block navbar %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +21,7 @@
 
     <div class = "text-center p-5">
         {% if output == False%}
-            <h1 class = "my-auto">This game is unsolvable!</h1>
+            <h1 class = "m-5">This game is unsolvable!</h1>
         {% else %}
 
             {% for i in output %}
@@ -35,10 +38,27 @@
                 </svg>
             {% endfor %}
         {% endif %}
+        
     </div>
+
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            <div class = "text-center">
+                <button class = "btn btn-primary" type="submit" name = "back"> < </button>
+                <button class="btn btn-primary" type="submit" name = "next"> > </button>
+
+            </div>
+            
+        </form>
+
+        
+
     
    
         
 
 </body>
 </html>
+{% endblock%}

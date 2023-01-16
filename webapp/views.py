@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from .solver import solve
+from django.http import HttpResponse
+from django.template import loader
 from .classes_OOP import Game
 from .classes_OOP import Ball
 
 tubes_collection = []
 tube = []
 tube_size_user = 0 # The tube_size value defined by users
+solution_index = 0
 solution = []
 
 # Create your views here.
@@ -18,7 +21,7 @@ def index(request):
         # if Save Tubesize button is clicked
         if "save-tubesize" in request.POST:
             tube_size_user = int(request.POST.get("tube_size"))
-            print(tube_size_user)
+
 
         # if Reset button is clicked
         elif "reset" in request.POST:
@@ -71,31 +74,63 @@ def display_game(game):
 # print(display_game(Game(2, [['blue', 'red'], ['blue', 'red'], []])))
 
 def solution(request):
-    global solution
+    global solution, solution_index
     '''
     Display the solution output
     '''
-
-    print("type(solution): ", type(solution))
+    
+    # If a solution exists
     if(type(solution) == list):
-        output_display_game = display_game(solution[0])
 
+        # Detect button clicks for next steps/ previous steps
+        if(request.method == "POST"):
+            # Change index value to iterate through solution
+            if "next" in request.POST:
+                solution_index += 1 
+            
+            else:
+                solution_index -= 1
+
+        print("index_out: ", index)
+
+        # Avoid index out of range due to spamming the buttons
+        if (solution_index < 0):
+            solution_index = 0
+
+        elif (solution_index >= len(solution)):
+            solution_index = len(solution)-1
+
+        output_display_game = display_game(solution[solution_index])
+
+    # If a solution does not exist
     else:
         output_display_game = solution
 
     return render(request, 'solution.html', {'output': output_display_game, 'tube_size': tube_size_user})
 
+def navbar_render(request):
+    navbar = loader.get_template('navbar.html')
+    return HttpResponse(navbar.render())
+
 def add_tubes(request):
+    '''
+    Render the add_tubes page
+    '''
+
     global tubes_collection, tube, counter, tube_size_user
 
     if (request.method == "POST"):
         counter = 100 * tube_size_user
 
         for i in range (int(request.POST.get("ball-num", None)),0,-1):
+            # Generate Ball objects for HTML canvas drawing
             temp = Ball(request.POST.get("ball-"+str(i), None), counter-50)
+            # Adjust positions
             counter -= 100
+            # Add the ball to the tube
             tube.append(temp)
 
+        # Add tube to tubes_collection
         tubes_collection.append(tube)
         tube = []
         return redirect('../index')
