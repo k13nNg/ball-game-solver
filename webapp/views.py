@@ -48,9 +48,42 @@ def index(request):
 
     return render(request, 'index.html', {'tubes_collection': tubes_collection, 'tube_size': tube_size_user})
 
-def solution(request):
+def display_game(game):
+    '''
+    Convert a game's tubes_lst to to list of Ball objects for display
+    '''
+    counter = 100 * tube_size_user
+    game_balls_display = []
+    tube = []
 
-    return render(request, 'solution.html', {'output': output_solution})
+    for i in game.tubes_lst:
+        for j in range(len(i)-1, -1, -1):
+            temp_ball = Ball(i[j], counter - 50)
+            counter -= 100
+            tube.append(temp_ball)
+
+        game_balls_display.append(tube)
+        counter = 100*tube_size_user
+        tube = []
+
+    return game_balls_display
+
+# print(display_game(Game(2, [['blue', 'red'], ['blue', 'red'], []])))
+
+def solution(request):
+    global solution
+    '''
+    Display the solution output
+    '''
+
+    print("type(solution): ", type(solution))
+    if(type(solution) == list):
+        output_display_game = display_game(solution[0])
+
+    else:
+        output_display_game = solution
+
+    return render(request, 'solution.html', {'output': output_display_game, 'tube_size': tube_size_user})
 
 def add_tubes(request):
     global tubes_collection, tube, counter, tube_size_user

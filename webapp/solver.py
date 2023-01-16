@@ -226,12 +226,13 @@ def solve(game):
                 visited.append(to_visit[0])
                 
                 # Record the visited tubes_lst
-                visited_tubes_lst = []
-                for i in visited:
-                    visited_tubes_lst.append(i.tubes_lst)
+                # visited_tubes_lst = []
+                # for i in visited:
+                #     visited_tubes_lst.append(i.tubes_lst)
 
                 # Return the solution game list
-                return visited_tubes_lst
+
+                return visited
 
             # elif is_member(to_visit[0], visited):
             #     to_visit.pop(0)

@@ -10,21 +10,35 @@
 </head>
 <body>
 
-    <div class="container-fluid d-flex justify-content-center align-items-center" style="height:100vh; overflow:hidden">
-        <div class = "row text-center d-flex align-items-center">
+    <!-- <div class="container-fluid d-flex justify-content-center align-items-center" style="height:100vh; overflow:hidden">
+        <div class = "row text-center d-flex align-items-center"> -->
 
-            {% if output == False%}
+        <!-- </div> -->
+    <!-- </div> -->
+
+    <div class = "text-center p-5">
+        {% if output == False%}
             <h1 class = "my-auto">This game is unsolvable!</h1>
-            {% else %}
+        {% else %}
 
-                <h1>To be Added</h1>
+            {% for i in output %}
+                <svg class="m-3" width="100" height="{{tube_size|multiply:100}}">
+
+                    <rect width="100" height="{{tube_size|multiply:100}}" style="fill:none;stroke-width:3;stroke:rgb(0,0,0)" />
+
+                    {% for j in i %}
+        
+                        <circle cx="50" cy={{j.y_pos}} r="40" stroke="black" stroke-width="3" fill={{j.color}} />
+
+                    {% endfor %}
+
+                </svg>
             {% endfor %}
-
-            {% endif %}
-        </div>
+        {% endif %}
     </div>
     
-
+   
+        
 
 </body>
 </html>
