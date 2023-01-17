@@ -91,8 +91,6 @@ def solution(request):
             else:
                 solution_index -= 1
 
-        print("index_out: ", index)
-
         # Avoid index out of range due to spamming the buttons
         if (solution_index < 0):
             solution_index = 0
