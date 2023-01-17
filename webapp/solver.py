@@ -87,6 +87,7 @@ def num_blocks(tubes_lst):
     '''
 
     blocks_num = 0
+    copy_tubes_lst = deepcopy(tubes_lst)
 
     def count_block_lst(tube, counter, curr_color):
 
@@ -106,29 +107,11 @@ def num_blocks(tubes_lst):
             else:
                 return count_block_lst(tube, counter+1, temp)
 
-    for i in tubes_lst:
+    for i in copy_tubes_lst:
         blocks_num += count_block_lst(i, 0, '')
 
 
     return blocks_num
-
-def are_equiv_games(game1, game2):
-    '''
-    Return 'true' if game1 and game2 are equivalent, false otherwise
-
-    Two games are equivalent if they have:
-        -> the same 'max_colors' value;
-        -> the same 'tube_size' value;
-        -> the same number of tubes; and
-        -> the tubes contain identical balls in identical order within the tube
-
-    '''
-    flag = True
-
-    for i in game1.tubes_lst:
-        flag = flag and (i in game2.tubes_lst)   
-    
-    return (game1.max_colors == game2.max_colors) and (game1.tube_size == game2.tube_size) and flag
 
 def next_games(game):
     '''
@@ -211,8 +194,6 @@ def solve(game):
         if visited is None:
             visited = []
 
-        
-
         if len(to_visit) == 0:
             return False
 
@@ -234,13 +215,20 @@ def solve(game):
 
                 return visited
 
-            # elif is_member(to_visit[0], visited):
-            #     to_visit.pop(0)
-            #     return solve_helper(to_visit, visited)
-
             else:
                 nbrs = next_games(to_visit[0])
                 new = list(filter(lambda a: not(is_member(a, visited)), nbrs))
+                
+                # Sort the possible next games by the num-blocks function
+
+                # If the num-block function returns a lower value -> most of the balls in the tubes have the same color
+                #  -> More potential to reach the solution -> Closer to completion -> Try those first
+
+                # If the num-block function returns a higher value -> most of the balls in the tubes DO NOT have the same color
+                # -> Less potential to reach the solution -> Further from completion -> Try those later
+
+                new.sort(key= lambda n: num_blocks(n.tubes_lst))
+
                 visited.append(to_visit.pop(0))
                 new.append(to_visit)
                 new = list(filter(lambda x: type(x) != list, new))
