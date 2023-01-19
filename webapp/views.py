@@ -131,6 +131,6 @@ def add_tubes(request):
         # Add tube to tubes_collection
         tubes_collection.append(tube)
         tube = []
-        return redirect('../index')
+        return redirect('../')
 
     return render(request, 'add-tubes.html')
