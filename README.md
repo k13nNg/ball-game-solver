@@ -5,14 +5,14 @@ The application was developed using: CSS, Django, HTML, JavaScript and Python
 
 # Warning
 As this program is developed using the backtracking algorithm, which is inefficient and might not be able to solve a few complicated puzzles. In such cases, an error ```RecursionError: maximum recursion depth exceeded in comparison``` might show up.
-If this situation occur, please refresh your website, redirect to the index page, and set up a less complicated puzzle.
+If this situation occur, please refresh your website, redirect to the home page, and set up a less complicated puzzle.
 
 I know, it's disappointing! But it's the best solution I could do right now :(
 
 # How to use the program
 
 1. Access the website at http://k2nguyen.pythonanywhere.com
-2. On the index page, select the desired tube size (In this example, I will choose 2) and click the **Save Tube Size** button
+2. On the home page, select the desired tube size (In this example, I will choose 2) and click the **Save Tube Size** button
    
    _Question:_ What is tube size?
    
@@ -34,8 +34,8 @@ I know, it's disappointing! But it's the best solution I could do right now :(
 3. Click the button **Add A Tube**
 4. This button would take you to a page to add a new tube to the game
 5. Select the number of balls you want for the tube (In this case, I chose 2)
-6. Select the color for each balls and click **Submit** to save the tube
-   **_IMPORTANT:_** Ball #1 denotes the ball at the top of the tube, and the last ball on the list would be the ball at the bottom of the list.
+6. Select the color for each balls and click **Submit** to save the tube <br/>
+**_IMPORTANT:_** **Ball #1** denotes the ball at the **top of the tube**, and the **last ball** on the list would be the ball at the **bottom of the list.**
    
    Look at the below example for clarity
    
