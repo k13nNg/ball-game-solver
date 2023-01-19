@@ -11,7 +11,7 @@ I know, it's disappointing! But it's the best solution I could do right now :(
 
 # How to use the program
 
-1. Access the website at _TBA_
+1. Access the website at http://k2nguyen.pythonanywhere.com
 2. On the index page, select the desired tube size (In this example, I will choose 2) and click the **Save Tube Size** button
    
    _Question:_ What is tube size?
