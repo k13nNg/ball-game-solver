@@ -1,7 +1,7 @@
 # Solve-the-Balls 
 This is a web application developed to solve the **Ball Sort Puzzle**
 
-The application was developed using: CSS, Django, HTML and Python
+The application was developed using: CSS, Django, HTML, JavaScript and Python
 
 # Warning
 As this program is developed using the backtracking algorithm, which is inefficient and might not be able to solve a few complicated puzzles. In such cases, an error ```RecursionError: maximum recursion depth exceeded in comparison``` might show up.
