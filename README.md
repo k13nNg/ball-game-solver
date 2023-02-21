@@ -59,7 +59,7 @@ I know, it's disappointing! But it's the best solution I could do right now :(
 8. Once you have finished setting up the puzzle, click the **Solve!** button to generate the solution for the puzzle
 9. The **Solve** button would redirect you to the solution page (This could take one to a few minutes depends on the complexity of your puzzle)
 10. If a solution does not exist, a text would be displayed indicating this condition. In such cases, please navigate back to the index page by clicking on the logo in the navigation bar and hit **Reset* and set up a new puzzle
-11. If a soltuion exists, the program would display specific steps to solve the puzzle. Use the <img width="102" alt="image" src="https://user-images.githubusercontent.com/75595156/212802203-b70ae000-25ef-49d7-a7e3-015e1267e946.png"> buttons to navigates through these steps
+11. If a solution exists, the program would display specific steps to solve the puzzle. Use the <img width="102" alt="image" src="https://user-images.githubusercontent.com/75595156/212802203-b70ae000-25ef-49d7-a7e3-015e1267e946.png"> buttons to navigates through these steps
 12. Enjoy the satisfaction of solving the game! You did it! HAVE FUN!!!
 
    
